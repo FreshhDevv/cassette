@@ -41,3 +41,6 @@ function validateMovie(movie) {
     })
     return schema.validate(movie)
 }
+
+exports.Movie = Movie
+exports.validate = validateMovie
