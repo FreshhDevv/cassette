@@ -12,11 +12,11 @@ router.post("/", async (req, res) => {
   if (error) {
     return res.status(400).send(error.details[0].message);
   }
-  let genre = new Genre({
+  const genre = new Genre({
     // id: genres.length + 1,
     name: req.body.name,
   });
-  genre = await genre.save();
+  await genre.save();
   // try {
   //     const genre = await genre.save()
   //     console.log(genre)
