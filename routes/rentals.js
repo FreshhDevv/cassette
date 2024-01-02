@@ -2,11 +2,11 @@ const { Rental, validate } = require("../models/rental");
 const { Movie } = require("../models/movie");
 const { Customer } = require("../models/customer");
 const mongoose = require("mongoose");
-const Fawn = require("fawn");
+// const Fawn = require("fawn");
 const express = require("express");
 const router = express.Router();
 
-Fawn.init(mongoose);
+// Fawn.init(mongoose);
 
 router.get("/", async (req, res) => {
   const rentals = await Rental.find().sort("-dateOut"); // Descending order
@@ -57,3 +57,5 @@ router.post("/", async (req, res) => {
 
   res.send(rental);
 });
+
+module.exports = router;
