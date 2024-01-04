@@ -7,6 +7,8 @@ router.get("/", async (req, res) => {
   res.send(genres);
 });
 
+
+
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) {
