@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth')
 const _ = require("lodash");
 const { User, validate } = require("../models/user");
 const express = require("express");
@@ -36,14 +37,14 @@ router.post("/", async (req, res) => {
   // });
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user)
     return res.status(404).send("The user with the given ID was not found.");
   res.send(user);
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth,  async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const user = await User.findByIdAndUpdate(
@@ -56,7 +57,7 @@ router.put("/:id", async (req, res) => {
   res.send(user);
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const user = await User.findByIdAndDelete(req.params.id);
   if (!user)
     return res.status(404).send("The user with the given ID was not found.");
