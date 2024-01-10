@@ -4,19 +4,18 @@ const express = require("express");
 const Joi = require("joi");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const asyncMiddleware = require("../middleware/async");
 
 router.get(
   "/",
-  asyncMiddleware(async (req, res) => {
+  async (req, res) => {
     const users = await User.find();
     res.send(users);
-  })
+  }
 );
 
 router.post(
   "/",
-  asyncMiddleware(async (req, res) => {
+  async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -32,7 +31,7 @@ router.post(
 
     const token = user.generateAuthToken();
     res.send(token);
-  })
+  }
 );
 
 // Validate the email and password gotten from the user
