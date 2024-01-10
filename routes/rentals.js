@@ -5,7 +5,6 @@ const { Customer } = require("../models/customer");
 const mongoose = require("mongoose");
 // const Fawn = require("fawn");
 const express = require("express");
-const asyncMiddleware = require("../middleware/async");
 const router = express.Router();
 
 // Fawn.init(mongoose);
@@ -13,16 +12,16 @@ const router = express.Router();
 router.get(
   "/",
   auth,
-  asyncMiddleware(async (req, res) => {
+  async (req, res) => {
     const rentals = await Rental.find().sort("-dateOut"); // Descending order
     res.send(rentals);
-  })
+  }
 );
 
 router.post(
   "/",
   auth,
-  asyncMiddleware(async (req, res) => {
+  async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -65,7 +64,7 @@ router.post(
     // }
 
     res.send(rental);
-  })
+  }
 );
 
 module.exports = router;

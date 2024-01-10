@@ -1,3 +1,4 @@
+require('express-async-errors')
 const error = require('./middleware/error')
 require("dotenv").config();
 const Joi = require('joi')
