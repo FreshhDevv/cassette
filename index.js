@@ -15,23 +15,11 @@ const users = require("./routes/users");
 const auth = require("./routes/auth");
 const config = require("config");
 
-// winston.add(winston.transports.File({filename: 'logfile.log'}))
-// new winston.transports.File({ filename: 'logfile.log' })
-// winston.createLogger({
-//   transports: [
-//     new winston.transports.File({ filename: 'logfile.log' })
-//   ]
-// });
-
 const logger = winston.createLogger({
-  level: 'error',
+  level: "error",
   format: winston.format.json(),
-  transports: [new winston.transports.File({ filename: "logfile.log"})],
+  transports: [new winston.transports.File({ filename: "logfile.log" })],
 });
-
-// const logger = winston.createLogger({
-//   transports: [new winston.transports.File({ filename: "logfile.log" })],
-// });
 
 if (!config.get("jwtPrivateKey")) {
   console.error("FATAL ERROR: jwtPrivateKey is not defined.");
@@ -62,4 +50,4 @@ app.use(error);
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
-module.exports = logger
+module.exports = logger;
