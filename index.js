@@ -26,10 +26,17 @@ if (!config.get("jwtPrivateKey")) {
   process.exit(1);
 }
 
-mongoose
-  .connect(process.env.MONGO_DB)
-  .then(() => console.log("Connected to MongoDB..."))
-  .catch((err) => console.error("Could not connect to MongoDB...", err));
+async function connectToMongoDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_DB);
+    console.log("Connected to MongoDB...");
+  } catch (err) {
+    console.error("Could not connect to MongoDB...", err);
+    process.exit(1); // Exit the application if MongoDB connection fails
+  }
+}
+
+connectToMongoDB();
 
 logger.info("Server started successfully.");
 
