@@ -1,5 +1,5 @@
 const winston = require("winston");
-require("winston-mongodb");
+// require("winston-mongodb");
 require("express-async-errors");
 const error = require("./middleware/error");
 require("dotenv").config();
@@ -15,15 +15,6 @@ const rentals = require("./routes/rentals");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
 const config = require("config");
-
-const logger = winston.createLogger({
-  level: "error",
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: "logfile.log" }),
-    new winston.transports.MongoDB({ db: process.env.MONGO_DB, level: 'error' }),
-  ],
-});
 
 if (!config.get("jwtPrivateKey")) {
   console.error("FATAL ERROR: jwtPrivateKey is not defined.");
@@ -41,6 +32,15 @@ async function connectToMongoDB() {
 }
 
 connectToMongoDB();
+
+const logger = winston.createLogger({
+  level: "error",
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({ filename: "logfile.log" }),
+    // new winston.transports.MongoDB({ db: process.env.MONGO_DB, level: 'error' }),
+  ],
+});
 
 logger.info("Server started successfully.");
 
