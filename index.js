@@ -1,4 +1,5 @@
 const winston = require("winston");
+require("winston-mongodb");
 require("express-async-errors");
 const error = require("./middleware/error");
 require("dotenv").config();
@@ -18,7 +19,10 @@ const config = require("config");
 const logger = winston.createLogger({
   level: "error",
   format: winston.format.json(),
-  transports: [new winston.transports.File({ filename: "logfile.log" })],
+  transports: [
+    new winston.transports.File({ filename: "logfile.log" }),
+    new winston.transports.MongoDB({ db: process.env.MONGO_DB, level: 'error' }),
+  ],
 });
 
 if (!config.get("jwtPrivateKey")) {
@@ -28,7 +32,7 @@ if (!config.get("jwtPrivateKey")) {
 
 async function connectToMongoDB() {
   try {
-    await mongoose.connect(process.env.MONGO_DB);
+    await mongoose.connect(process.env.MONGO_DB, { useUnifiedTopology: true, useNewUrlParser: true });
     console.log("Connected to MongoDB...");
   } catch (err) {
     console.error("Could not connect to MongoDB...", err);
