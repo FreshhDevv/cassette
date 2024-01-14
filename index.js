@@ -33,6 +33,11 @@ async function connectToMongoDB() {
 
 connectToMongoDB();
 
+process.on('uncaughtException', (ex) => {
+  console.log('WE GOT AND UNCAUGHT EXCEPTION')
+  logger.error(ex.message, ex)
+})
+
 const logger = winston.createLogger({
   level: "error",
   format: winston.format.json(),
@@ -41,6 +46,8 @@ const logger = winston.createLogger({
     // new winston.transports.MongoDB({ db: process.env.MONGO_DB, level: 'error' }),
   ],
 });
+
+throw new Error('Something failed during startup.')
 
 logger.info("Server started successfully.");
 
