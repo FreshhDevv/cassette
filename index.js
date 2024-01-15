@@ -4,10 +4,10 @@ require("express-async-errors");
 require("dotenv").config();
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
-const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 require("./startup/routes")(app);
+require('./startup/db')()
 
 const config = require("config");
 
@@ -16,20 +16,7 @@ if (!config.get("jwtPrivateKey")) {
   process.exit(1);
 }
 
-async function connectToMongoDB() {
-  try {
-    await mongoose.connect(process.env.MONGO_DB, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    });
-    console.log("Connected to MongoDB...");
-  } catch (err) {
-    console.error("Could not connect to MongoDB...", err);
-    process.exit(1); // Exit the application if MongoDB connection fails
-  }
-}
 
-connectToMongoDB();
 
 // process.on('uncaughtException', (ex) => {
 //   logger.error(ex.message, ex)
@@ -61,7 +48,7 @@ logger.rejections.handle(
   new winston.transports.File({ filename: "uncaughtRejections.log" })
 );
 
-throw new Error("Something failed miserably.");
+// throw new Error("Something failed miserably.");
 
 // const p = Promise.reject(new Error('Something failed miserably.'))
 // p.then(() => console.log('Done'))
