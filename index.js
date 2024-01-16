@@ -8,13 +8,10 @@ const app = express();
 const logger = require('./startup/logger')
 require("./startup/routes")(app);
 require('./startup/db')()
+require('./startup/config')()
 
-const config = require("config");
 
-if (!config.get("jwtPrivateKey")) {
-  console.error("FATAL ERROR: jwtPrivateKey is not defined.");
-  process.exit(1);
-}
+
 
 
 
