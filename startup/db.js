@@ -4,7 +4,6 @@ const logger = require("./logger"); // Import the logger module
 async function connectToMongoDB() {
   try {
     await mongoose.connect(process.env.MONGO_DB);
-    // logger.info('Connected to MongoDB...')
     logger.info("Connected to MongoDB...");
   } catch (err) {
     logger.error(err.message, err);

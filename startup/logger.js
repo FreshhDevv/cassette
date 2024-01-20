@@ -3,7 +3,7 @@ require("express-async-errors");
 require("winston-mongodb");
 
 const logger = winston.createLogger({
-    level: "error",
+    level: ["error","info"],
     format: winston.format.json(),
     transports: [
         new winston.transports.File({ filename: "logfile.log" }),
