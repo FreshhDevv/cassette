@@ -1,14 +1,13 @@
 const winston = require("winston");
 // require("winston-mongodb");
 require("dotenv").config();
-const Joi = require("joi");
-Joi.objectId = require("joi-objectid")(Joi);
 const express = require("express");
 const app = express();
 const logger = require('./startup/logger')
 require("./startup/routes")(app);
 require('./startup/db')()
 require('./startup/config')()
+require('./startup/validation')()
 
 
 
@@ -47,6 +46,6 @@ logger.info("Server started successfully.");
 
 // PORT
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+app.listen(port, () => logger.info(`Listening on port ${port}...`));
 
 module.exports = logger;
