@@ -8,7 +8,7 @@ const logger = winston.createLogger({
     transports: [
         new winston.transports.File({ filename: "logfile.log" }),
         new winston.transports.MongoDB({ db: process.env.MONGO_DB, level: 'error' }),
-        new winston.transports.File({ filename: "uncaughtExeptions.log" }),
+        new winston.transports.File({ filename: "uncaughtExceptions.log" }),
         new winston.transports.File({ filename: "uncaughtRejections.log" }),
     ],
 });

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const winston = require("winston");
 const logger = require("./logger"); // Import the logger module
 
 async function connectToMongoDB() {
