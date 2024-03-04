@@ -1,11 +1,11 @@
 const winston = require("winston");
 // require("winston-mongodb");
-require("express-async-errors");
 require("dotenv").config();
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const express = require("express");
 const app = express();
+const logger = require('./startup/logger')
 require("./startup/routes")(app);
 require('./startup/db')()
 
@@ -23,19 +23,12 @@ if (!config.get("jwtPrivateKey")) {
 //   process.exit(1)
 // })
 
-const logger = winston.createLogger({
-  level: "error",
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: "logfile.log" }),
-    // new winston.transports.MongoDB({ db: process.env.MONGO_DB, level: 'error' }),
-  ],
-});
+// const logger = 
 
 // winston.exceptions.handle(new winston.transports.File({filename: 'uncaughtExeptions.log'}))
-logger.exceptions.handle(
-  new winston.transports.File({ filename: "uncaughtExeptions.log" })
-);
+// logger.exceptions.handle(
+//   new winston.transports.File({ filename: "uncaughtExeptions.log" })
+// );
 
 // throw new Error('Something failed on startup.')
 
@@ -44,9 +37,9 @@ logger.exceptions.handle(
 //   process.exit(1)
 // })
 
-logger.rejections.handle(
-  new winston.transports.File({ filename: "uncaughtRejections.log" })
-);
+// logger.rejections.handle(
+//   new winston.transports.File({ filename: "uncaughtRejections.log" })
+// );
 
 // throw new Error("Something failed miserably.");
 
